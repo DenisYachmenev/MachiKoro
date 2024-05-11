@@ -23,50 +23,6 @@ public class ServiceContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        //modelBuilder.Entity<Card>().HasData(
-        //     new Card()
-        //     {
-        //         Id = 1,
-        //         Name = "Вокзал",
-        //         Price = 4,
-        //         Action = "Можно кидать 2 кубика",
-        //         Type = 1,
-        //         MaxCount = 5,
-        //         Level = 1,
-        //     },
-        //     new Card()
-        //     {
-        //         Id = 2,
-        //         Name = "Торговый центр",
-        //         Price = 10,
-        //         Action = "Что-то",
-        //         Type = 1,
-        //         MaxCount = 5,
-        //         Level = 1,
-        //     },
-            // new Card()
-            // {
-            //     Id = 1,
-            //     Name = "Пшеничное поле",
-            //     Price = 1,
-            //     Action = "Что-то",
-            //     Type = 2,
-            //     MaxCount = 10,
-            //     Level = 1,
-            // }
-        //     new Card()
-        //     {
-        //         Id = 4,
-        //         Name = "Пекарня",
-        //         Numbers = new List<Number>(){ number1, number2 },
-        //         Price = 1,
-        //         Action = "Что-то",
-        //         Type = 3,
-        //         MaxCount = 6,
-        //         Level = 1,
-        //     }
-        //);
-
         base.OnModelCreating(modelBuilder);
     }
 }
