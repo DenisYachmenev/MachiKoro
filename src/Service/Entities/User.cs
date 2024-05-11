@@ -6,6 +6,6 @@ namespace MachiKaro.Service.Entities;
 public class User
 {
     public int Id {get; set; }
-    public string Name { get; set; }
-    public List<Game> Games { get; set; }
+    public required string Name { get; set; }
+    public required List<Game> Games { get; set; }
 }

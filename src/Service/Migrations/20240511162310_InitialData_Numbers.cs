@@ -31,5 +31,11 @@ namespace Service.Migrations
                     { 14, 14 },
                 });
         }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+
+        }
     }
 }
