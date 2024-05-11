@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MachiKaro.Service.Services.Implementations;
 
-public class CardsService : ICardsService
+public class CardService : ICardService
 {
     private readonly ServiceContext _context;
 
-    public CardsService(ServiceContext context)
+    public CardService(ServiceContext context)
     {
         _context = context;
     }

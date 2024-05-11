@@ -8,9 +8,9 @@ namespace MachiKaro.Service.Controllers;
 [ApiController]
 public class CardsController : ControllerBase
 {
-    private readonly ICardsService _service;
+    private readonly ICardService _service;
 
-    public CardsController(ICardsService service)
+    public CardsController(ICardService service)
     {
         _service = service;
     }

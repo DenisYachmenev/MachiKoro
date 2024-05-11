@@ -23,6 +23,8 @@ public class ServiceContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Game>().HasOne(game => game.Owner).WithMany(user => user.MyGames);
+
         base.OnModelCreating(modelBuilder);
     }
 }

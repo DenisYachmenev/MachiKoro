@@ -5,11 +5,33 @@
 namespace Service.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialData_Cards : Migration
+    public partial class InitialData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            // init data
+            migrationBuilder.InsertData(
+                "Numbers", 
+                new string[] { "Id", "Value" }, 
+                new string[] {"INTEGER", "INTEGER"}, 
+                new object[,] { 
+                    { 1, 1 },
+                    { 2, 2 },
+                    { 3, 3 },
+                    { 4, 4 },
+                    { 5, 5 },
+                    { 6, 6 },
+                    { 7, 7 },
+                    { 8, 8 },
+                    { 9, 9 },
+                    { 10, 10 },
+                    { 11, 11 },
+                    { 12, 12 },
+                    { 13, 13 },
+                    { 14, 14 },
+                });
+
             migrationBuilder.InsertData("Cards", 
                 new string[] { "Id", "Name", "Price", "Action", "Type", "MaxCount", "Level"}, 
                 new string[] {"INTEGER", "TEXT", "INTEGER", "TEXT", "INTEGER", "INTEGER", "INTEGER"}, 
@@ -26,12 +48,25 @@ namespace Service.Migrations
                     { 10, "Стадион", 6, "Возьмите 2 монеты у каждого игрока. В свой ход.", 4, 5, 1 },
                     { 11, "Кафе", 2, "Возьмите 1 монету у игрока, бросившего кубики. В ход другого игрока.", 5, 6, 1 },
                 });
+
+            migrationBuilder.InsertData("CardNumber", 
+                new string[] { "CardsId", "NumbersId"}, 
+                new string[] {"INTEGER", "INTEGER"}, 
+                new object[,] { 
+                    { 5, 1 },
+                    { 6, 2 },
+                    { 7, 5 },
+                    { 8, 2 },
+                    { 8, 3 },
+                    { 9, 4 },
+                    { 10, 6 },
+                    { 11, 3 },
+                });
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-
         }
     }
 }

@@ -12,7 +12,9 @@ builder.Services.AddDbContext<ServiceContext>( options =>
 } );
 //builder.Services.AddScoped<ServiceContext>();
 
-builder.Services.AddTransient<ICardsService, CardsService>();
+builder.Services.AddTransient<ICardService, CardService>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IGameService, GameService>();
 
 var app = builder.Build();
 

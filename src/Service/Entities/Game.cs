@@ -8,13 +8,8 @@ public class Game
 {
     public required string Id {get; set; }
     
-    public int UserId { get; set; }
-    [ForeignKey("UserId")]
-    public required User User { get; set; }
+    public int OwnerId { get; set; }
+    public User? Owner { get; set; }
     
-    public int CardId { get; set; }
-    [ForeignKey("CardId")]
-    public required Card Card { get; set; }
-
-    public int Count { get; set; }
+    public List<User> Users { get; set; } = new List<User>();
 }

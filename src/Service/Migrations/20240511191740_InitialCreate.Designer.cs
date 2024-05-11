@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Service.Migrations
 {
     [DbContext(typeof(ServiceContext))]
-    [Migration("20240511162706_InitialData_CardNumber")]
-    partial class InitialData_CardNumber
+    [Migration("20240511191740_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,21 @@ namespace Service.Migrations
                     b.HasIndex("NumbersId");
 
                     b.ToTable("CardNumber");
+                });
+
+            modelBuilder.Entity("GameUser", b =>
+                {
+                    b.Property<string>("GamesId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("GamesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("GameUser");
                 });
 
             modelBuilder.Entity("MachiKaro.Service.Entities.Card", b =>
@@ -70,20 +85,12 @@ namespace Service.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("CardId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("UserId")
+                    b.Property<int>("OwnerId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CardId");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Games");
                 });
@@ -132,28 +139,35 @@ namespace Service.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("GameUser", b =>
+                {
+                    b.HasOne("MachiKaro.Service.Entities.Game", null)
+                        .WithMany()
+                        .HasForeignKey("GamesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MachiKaro.Service.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("MachiKaro.Service.Entities.Game", b =>
                 {
-                    b.HasOne("MachiKaro.Service.Entities.Card", "Card")
-                        .WithMany()
-                        .HasForeignKey("CardId")
+                    b.HasOne("MachiKaro.Service.Entities.User", "Owner")
+                        .WithMany("MyGames")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MachiKaro.Service.Entities.User", "User")
-                        .WithMany("Games")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Card");
-
-                    b.Navigation("User");
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("MachiKaro.Service.Entities.User", b =>
                 {
-                    b.Navigation("Games");
+                    b.Navigation("MyGames");
                 });
 #pragma warning restore 612, 618
         }
