@@ -13,4 +13,16 @@ public class ServiceContext : DbContext
     public ServiceContext(DbContextOptions<ServiceContext> options) : base(options)
     {
     }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite("DataSource=MachiKoro.db");
+
+        base.OnConfiguring(optionsBuilder);
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+    }
 }
