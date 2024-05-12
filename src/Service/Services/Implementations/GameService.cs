@@ -13,25 +13,34 @@ public class GameService : IGameService
         _context = context;
     }
 
-    public string Create(int userId)
+    public int Create(int userId)
     {
         var user = _context.Users.First(u => u.Id == userId);
 
         var game = _context.Games
-            .Add(new Game() { Id = Guid.NewGuid().ToString(), OwnerId = userId, Users = new List<User> { user } });
+            .Add(new Game() { OwnerId = userId, IsActive = false, Users = new List<User> { user } });
 
         _context.SaveChanges();
 
         return game.Entity.Id;
     }
 
-    public void AddUserToGame(string gameId, int userId)
+    public void AddUserToGame(int gameId, int userId)
     {
         var user = _context.Users.First(u => u.Id == userId);
 
         var game = _context.Games.Include(g => g.Users).First(g => g.Id == gameId);
 
         game.Users.Add(user);
+
+        _context.SaveChanges();
+    }
+
+    public void Start(int gameId)
+    {
+        var game = _context.Games.Include(g => g.Users).First(g => g.Id == gameId);
+
+        game.IsActive = true;
 
         _context.SaveChanges();
     }

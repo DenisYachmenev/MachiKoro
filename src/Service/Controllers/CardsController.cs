@@ -15,15 +15,9 @@ public class CardsController : ControllerBase
         _service = service;
     }
 
-    [HttpGet("getByType/{type}")]
-    public CardDto[] GetByType(int type)
+    [HttpGet("getInitialLayout/{level}")]
+    public CardDto[] GetInitialLayout(int level)
     {
-        return _service.GetByType(type);
-    }
-
-    [HttpGet("getByNumber/{number}")]
-    public CardDto[] GetByNumber(int number)
-    {
-        return _service.GetByNumber(number);
+        return _service.GetInitialCards(level);
     }
 }

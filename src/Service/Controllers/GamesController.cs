@@ -8,21 +8,37 @@ namespace MachiKaro.Service.Controllers;
 public class GamesController : ControllerBase
 {
     private readonly IGameService _service;
+    private readonly IGameProcessService _processService;
 
-    public GamesController(IGameService service)
+    public GamesController(
+        IGameService service, 
+        IGameProcessService processService)
     {
         _service = service;
+        _processService = processService;
     }
 
     [HttpPost]
-    public string Create(int userId)
+    public int Create(int userId)
     {
         return _service.Create(userId);
     } 
 
     [HttpPost("addUserToGame/{gameId}/{userId}")]
-    public void AddUserToGame(string gameId, int userId)
+    public void AddUserToGame(int gameId, int userId)
     {
         _service.AddUserToGame(gameId, userId);
     } 
+
+    [HttpPost("start/{gameId}")]
+    public void Start(int gameId)
+    {
+        _service.Start(gameId);
+    }
+
+    [HttpPost("step/{gameId}/{userId}/{number}")]
+    public void Step(int gameId, int userId, int number)
+    {
+        _processService.Step(gameId, userId, number);
+    }
 }

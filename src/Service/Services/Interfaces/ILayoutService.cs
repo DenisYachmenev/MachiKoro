@@ -2,7 +2,7 @@ using MachiKaro.Service.Services.Dto;
 
 namespace MachiKaro.Service.Services.interfaces;
 
-public interface ICardService
+public interface ILayoutService
 {
-    CardDto[] GetInitialCards(int level);
+    
 }

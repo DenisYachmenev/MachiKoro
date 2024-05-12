@@ -6,10 +6,14 @@ namespace MachiKaro.Service.Entities;
 [Table("Games")]
 public class Game
 {
-    public required string Id {get; set; }
+    public int Id {get; set; }
     
     public int OwnerId { get; set; }
     public User? Owner { get; set; }
     
+    public bool IsActive { get; set; }
+
     public List<User> Users { get; set; } = new List<User>();
+
+    public List<Layout> Layouts { get; set; } = new List<Layout>();
 }

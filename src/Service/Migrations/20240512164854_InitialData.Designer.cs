@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Service.Migrations
 {
     [DbContext(typeof(ServiceContext))]
-    [Migration("20240511191740_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240512164854_InitialData")]
+    partial class InitialData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,8 +36,8 @@ namespace Service.Migrations
 
             modelBuilder.Entity("GameUser", b =>
                 {
-                    b.Property<string>("GamesId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("GamesId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("UsersId")
                         .HasColumnType("INTEGER");
@@ -59,6 +59,9 @@ namespace Service.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsInitial")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Level")
                         .HasColumnType("INTEGER");
 
@@ -77,13 +80,17 @@ namespace Service.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cards", "machikoro");
+                    b.ToTable("Cards");
                 });
 
             modelBuilder.Entity("MachiKaro.Service.Entities.Game", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("OwnerId")
                         .HasColumnType("INTEGER");
@@ -93,6 +100,54 @@ namespace Service.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("MachiKaro.Service.Entities.Layout", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Layouts");
+                });
+
+            modelBuilder.Entity("MachiKaro.Service.Entities.LayoutItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CardId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("LayoutId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId");
+
+                    b.HasIndex("LayoutId");
+
+                    b.ToTable("LayoutItems");
                 });
 
             modelBuilder.Entity("MachiKaro.Service.Entities.Number", b =>
@@ -121,7 +176,7 @@ namespace Service.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", "machikoro");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("CardNumber", b =>
@@ -165,8 +220,58 @@ namespace Service.Migrations
                     b.Navigation("Owner");
                 });
 
+            modelBuilder.Entity("MachiKaro.Service.Entities.Layout", b =>
+                {
+                    b.HasOne("MachiKaro.Service.Entities.Game", "Game")
+                        .WithMany("Layouts")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MachiKaro.Service.Entities.User", "User")
+                        .WithMany("Layouts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MachiKaro.Service.Entities.LayoutItem", b =>
+                {
+                    b.HasOne("MachiKaro.Service.Entities.Card", "Card")
+                        .WithMany()
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MachiKaro.Service.Entities.Layout", "Layout")
+                        .WithMany("LayoutItems")
+                        .HasForeignKey("LayoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Card");
+
+                    b.Navigation("Layout");
+                });
+
+            modelBuilder.Entity("MachiKaro.Service.Entities.Game", b =>
+                {
+                    b.Navigation("Layouts");
+                });
+
+            modelBuilder.Entity("MachiKaro.Service.Entities.Layout", b =>
+                {
+                    b.Navigation("LayoutItems");
+                });
+
             modelBuilder.Entity("MachiKaro.Service.Entities.User", b =>
                 {
+                    b.Navigation("Layouts");
+
                     b.Navigation("MyGames");
                 });
 #pragma warning restore 612, 618

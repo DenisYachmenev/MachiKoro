@@ -13,22 +13,21 @@ public class CardService : ICardService
         _context = context;
     }
 
-    public CardDto[] GetByType(int type)
+    public CardDto[] GetInitialCards(int level)
     {
-        return _context.Cards
-            .Where(c => c.Type == type)
-            .Select(c => new CardDto() { Id = c.Id, Name = c.Name, Action = c.Action })
+        var cards = _context.Cards
+            .Include(c => c.Numbers)
+            .Where(c => c.IsInitial == true && c.Level == level)
             .ToArray();
-    }
-
-    public CardDto[] GetByNumber(int number)
-    {
-        var item = _context.Numbers
-            .Include(n => n.Cards)
-            .FirstOrDefault(n => n.Value == number);
-
-        return item == null 
-            ? Array.Empty<CardDto>()
-            : item.Cards.Select(c => new CardDto (){ Id = c.Id, Name = c.Name, Action = c.Action }).ToArray();
+        
+        return cards.Select(card => new CardDto ()
+        {
+            Id = card.Id,
+            Name = card.Name,
+            Price = card.Price,
+            Action = card.Action,
+            Type = card.Type,
+            Numbers = card.Numbers.Select(n => n.Value).ToArray(),
+        }).ToArray();
     }
 }

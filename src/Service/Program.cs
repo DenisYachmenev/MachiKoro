@@ -15,6 +15,9 @@ builder.Services.AddDbContext<ServiceContext>( options =>
 builder.Services.AddTransient<ICardService, CardService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IGameService, GameService>();
+builder.Services.AddTransient<IGameProcessService, GameProcessService>();
+builder.Services.AddTransient<ILayoutService, LayoutService>();
+builder.Services.AddTransient<IDiceService, DiceService>();
 
 var app = builder.Build();
 
