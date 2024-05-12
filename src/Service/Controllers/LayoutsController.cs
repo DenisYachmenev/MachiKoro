@@ -14,4 +14,16 @@ public class LayoutsController : ControllerBase
     {
         _service = service;
     }
+
+    [HttpPost]
+    public int CreateLayout(int gameId, int userId)
+    {
+        throw new NotImplementedException();
+    }
+
+    [HttpPost]
+    public void AddLayoutItem(int layoutId, int cardId, bool isActive)
+    {
+        throw new NotImplementedException();
+    }
 }
