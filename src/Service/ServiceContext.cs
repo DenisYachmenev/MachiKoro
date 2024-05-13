@@ -9,6 +9,8 @@ public class ServiceContext : DbContext
     public DbSet<Number> Numbers { get; set; }
     public DbSet<Card> Cards { get; set; }
     public DbSet<Game> Games { get; set; }
+    public DbSet<Layout> Layouts { get; set; }
+    public DbSet<LayoutItem> LayoutItems { get; set; }
 
     public ServiceContext(DbContextOptions<ServiceContext> options) : base(options)
     {

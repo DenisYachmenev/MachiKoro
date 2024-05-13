@@ -30,4 +30,23 @@ public class CardService : ICardService
             Numbers = card.Numbers.Select(n => n.Value).ToArray(),
         }).ToArray();
     }
+
+    public CardDto[] GetReserveCards(int level)
+    {
+        var cards = _context.Cards
+            .Include(c => c.Numbers)
+            .Where(c => c.Type != 1 && c.Level == level)
+            .ToArray();
+
+        // TODO: Маппинг?
+        return cards.Select(card => new CardDto ()
+        {
+            Id = card.Id,
+            Name = card.Name,
+            Price = card.Price,
+            Action = card.Action,
+            Type = card.Type,
+            Numbers = card.Numbers.Select(n => n.Value).ToArray(),
+        }).ToArray();
+    }
 }

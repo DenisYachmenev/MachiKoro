@@ -15,7 +15,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
-    public int Add(string name)
+    public int Create(string name)
     {
         return _service.Add(name);
     } 

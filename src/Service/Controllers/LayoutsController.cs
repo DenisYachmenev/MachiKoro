@@ -1,3 +1,4 @@
+using MachiKaro.Service.Entities;
 using MachiKaro.Service.Services.Dto;
 using MachiKaro.Service.Services.interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -15,15 +16,21 @@ public class LayoutsController : ControllerBase
         _service = service;
     }
 
-    [HttpPost]
-    public int CreateLayout(int gameId, int userId)
+    [HttpPost("createLayout/{gameId}/{userId}")]
+    public int CreateLayout(int gameId, int userId, [FromBody] LayoutItemDto[] layoutItemDtos)
     {
-        throw new NotImplementedException();
+        return _service.CreateLayout(gameId, userId, layoutItemDtos);
     }
 
-    [HttpPost]
-    public void AddLayoutItem(int layoutId, int cardId, bool isActive)
+    [HttpPost("addLayoutItem/{layoutId}/{cardId}")]
+    public void AddLayoutItem(int layoutId, int cardId)
     {
-        throw new NotImplementedException();
+        _service.AddLayoutItem(layoutId, cardId);
+    }
+
+    [HttpPost("activateLayoutItem/{layoutId}/{cardId}")]
+    public void ActivateLayoutItem(int layoutId, int cardId)
+    {
+        _service.ActivateLayoutItem(layoutId, cardId);
     }
 }
